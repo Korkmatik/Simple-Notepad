@@ -24,6 +24,12 @@ LRESULT WindowProcedure(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		case MainWindow::TEMPLATE_DATE:
 			window->insertDate(hwnd);
 			break;
+		case MainWindow::TEMPLATE_TIME_OF_DAY:
+			window->insertTimeOfDay(hwnd);
+			break;
+		case MainWindow::TEMPLATE_TIME:
+			window->insertTime(hwnd);
+			break;
 		default:
 			break;
 		}

@@ -19,6 +19,8 @@ public:
 	void getOpenFilePath(HWND hWnd);
 	void exit(HWND hWnd);
 	void insertDate(HWND hWnd);
+	void insertTimeOfDay(HWND hWnd);
+	void insertTime(HWND hWnd);
 
 private:
 	WNDCLASSW wc = {};

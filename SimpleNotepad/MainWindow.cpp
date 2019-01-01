@@ -140,10 +140,37 @@ void MainWindow::exit(HWND hWnd) {
 void MainWindow::insertDate(HWND hWnd) {
 	
 	char* timeBuffer = getTime();
+	char date[11];
+	int j = 0;
+	for (int i = 0; i < 10; ++j, i++) {
+		date[j] = timeBuffer[i];
+	}
+	date[j] = '\0';
 
-	if(insertIntoEditControl(timeBuffer) == false)
+	if(insertIntoEditControl(date) == false)
 		MessageBox(NULL, "Couldn't insert Date into edit control", "Error", MB_ICONERROR);
 
+}
+
+void MainWindow::insertTimeOfDay(HWND hWnd) {
+	char* fullTime = getTime();
+	char time[7];
+
+	int j = 0;
+	for (int i = 11; i < 16; ++j, ++i) {
+		time[j] = fullTime[i];
+	}
+	time[j] = '\0';
+
+	if (insertIntoEditControl(time) == false)
+		MessageBox(NULL, "Couldn't insert Time into edit control", "Error", MB_ICONERROR);
+}
+
+void MainWindow::insertTime(HWND hWnd) {
+	char* fullTime = getTime();
+
+	if (insertIntoEditControl(fullTime) == false)
+		MessageBox(NULL, "Couldn't insert Time into edit control", "Error", MB_ICONERROR);
 }
 
 void MainWindow::initWindow() {
