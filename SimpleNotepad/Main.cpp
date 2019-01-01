@@ -7,7 +7,7 @@ LRESULT WindowProcedure(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	case WM_COMMAND:
 		switch (wParam) {
 		case MainWindow::FILE_NEW:
-			MessageBeep(MB_ICONINFORMATION);
+			window->newFile(hwnd);
 			break;
 		case MainWindow::FILE_SAVE:
 			window->save(hwnd);

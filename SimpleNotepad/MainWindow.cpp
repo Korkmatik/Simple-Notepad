@@ -59,6 +59,22 @@ void MainWindow::addComponents(HWND hWnd, HWND& hEditB) {
 	SetMenu(hWnd, hMenuBar);
 }
 
+void MainWindow::newFile(HWND hWnd) {
+	int retVal = MessageBox(hWnd, "Do you want to save before creating a new file?", "New file ..", MB_YESNOCANCEL);
+
+	if (retVal == IDCANCEL)
+		return;
+	else if (retVal == IDNO) {
+		saveChanged = false;
+		clearEditControl();
+	}
+	else if (retVal == IDYES) {
+		save(hWnd);
+		saveChanged = false;
+		clearEditControl();
+	}
+}
+
 void MainWindow::save(HWND hWnd) {
 	if (saveChanged) {
 		saveFile(path);
@@ -211,7 +227,10 @@ bool MainWindow::insertIntoEditControl(char * txt) {
 	free(buffer);
 
 	return true;
+}
 
+void MainWindow::clearEditControl() {
+	SetWindowText(hEditBox, "");
 }
 
 
