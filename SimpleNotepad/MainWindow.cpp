@@ -37,9 +37,9 @@ void MainWindow::addComponents(HWND hWnd, HWND& hEditB) {
 		15, 80, 1000, 450,
 		hWnd, NULL, NULL, NULL);
 
-	HMENU hFileMenuBar = CreateMenu();
-	HMENU hFileMenu = CreateMenu();
+	HMENU hMenuBar = CreateMenu();
 
+	HMENU hFileMenu = CreateMenu();
 	AppendMenuW(hFileMenu, MF_STRING, FILE_NEW, L"New");
 	AppendMenuW(hFileMenu, MF_SEPARATOR, NULL, NULL);
 	AppendMenuW(hFileMenu, MF_STRING, FILE_OPEN, L"Open");
@@ -48,9 +48,15 @@ void MainWindow::addComponents(HWND hWnd, HWND& hEditB) {
 	AppendMenuW(hFileMenu, MF_SEPARATOR, NULL, NULL);
 	AppendMenuW(hFileMenu, MF_STRING, FILE_EXIT, L"Exit");
 
-	AppendMenuW(hFileMenuBar, MF_POPUP, (UINT_PTR)hFileMenu, L"File");
+	HMENU hTemplateMenu = CreateMenu();
+	AppendMenuW(hTemplateMenu, MF_STRING, TEMPLATE_TIME_OF_DAY, L"Time of day");
+	AppendMenuW(hTemplateMenu, MF_STRING, TEMPLATE_DATE, L"Date");
+	AppendMenuW(hTemplateMenu, MF_STRING, TEMPLATE_TIME, L"Time");
 
-	SetMenu(hWnd, hFileMenuBar);
+
+	AppendMenuW(hMenuBar, MF_POPUP, (UINT_PTR)hFileMenu, L"File");
+	AppendMenuW(hMenuBar, MF_POPUP, (UINT_PTR)hTemplateMenu, L"Templates");
+	SetMenu(hWnd, hMenuBar);
 }
 
 void MainWindow::save(HWND hWnd) {
