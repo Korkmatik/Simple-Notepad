@@ -10,10 +10,16 @@ LRESULT WindowProcedure(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 			MessageBeep(MB_ICONINFORMATION);
 			break;
 		case MainWindow::FILE_SAVE:
+			window->save(hwnd);
+			break;
+		case MainWindow::FILE_SAVE_AS:
 			window->getSaveFilePath(hwnd);
 			break;
 		case MainWindow::FILE_OPEN:
 			window->getOpenFilePath(hwnd);
+			break;
+		case MainWindow::FILE_EXIT:
+			window->exit(hwnd);
 			break;
 		default:
 			break;
