@@ -1,8 +1,20 @@
 #include "MainWindow.h"
 
+MainWindow* window;
+
 LRESULT WindowProcedure(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	switch (uMsg) {
+	case WM_COMMAND:
+		switch (wParam) {
+		case MainWindow::FILE_NEW:
+			MessageBeep(MB_ICONINFORMATION);
+		case MainWindow::FILE_SAVE:
+			window->getSaveFilePath(hwnd);
+		default:
+			break;
+		}
 	case WM_CREATE:
+		MainWindow::addComponents(hwnd, window->hEditBox);
 		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
@@ -14,10 +26,12 @@ LRESULT WindowProcedure(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 }
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
-	
-	MainWindow window(hInstance, hPrevInstance, lpCmdLine, nCmdShow, WindowProcedure);
+	window = new MainWindow(hInstance, hPrevInstance, lpCmdLine, nCmdShow, WindowProcedure);
 
-	window.start();
+
+	window->start();
+
+	delete window;
 
 	return EXIT_SUCCESS;
 }

@@ -4,10 +4,15 @@
 class MainWindow
 {
 public:
+	HWND hEditBox;
+	enum RESOURCE { FILE_NEW, FILE_OPEN, FILE_SAVE, FILE_SAVE_AS};
+
 	MainWindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow, LRESULT(*WindowProcedure)(HWND, UINT, WPARAM, LPARAM));
 	~MainWindow();
 
 	void start();
+	static void addComponents(HWND hWnd, HWND& hEditB);
+	void getSaveFilePath(HWND hWnd);
 
 private:
 	WNDCLASSW wc = {};
@@ -18,5 +23,6 @@ private:
 	LRESULT (*WindowProcedure)(HWND, UINT, WPARAM, LPARAM);
 
 	void initWindow();
+	void saveFile(const LPSTR& file);
 };
 
