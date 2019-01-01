@@ -13,6 +13,7 @@ public:
 	void start();
 	void addComponents(HWND hWnd, HWND& hEditB);
 	void getSaveFilePath(HWND hWnd);
+	void getOpenFilePath(HWND hWnd);
 
 private:
 	WNDCLASSW wc = {};
@@ -24,5 +25,6 @@ private:
 
 	void initWindow();
 	void saveFile(const LPSTR& file);
+	void openFile(const LPSTR& file);
 };
 
