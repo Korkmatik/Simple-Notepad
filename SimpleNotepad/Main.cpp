@@ -21,6 +21,9 @@ LRESULT WindowProcedure(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		case MainWindow::FILE_EXIT:
 			window->exit(hwnd);
 			break;
+		case MainWindow::TEMPLATE_DATE:
+			window->insertDate(hwnd);
+			break;
 		default:
 			break;
 		}
