@@ -17,6 +17,7 @@ public:
 	void getSaveFilePath(HWND hWnd);
 	void getOpenFilePath(HWND hWnd);
 	void exit(HWND hWnd);
+	void insertDate(HWND hWnd);
 
 private:
 	WNDCLASSW wc = {};
@@ -31,5 +32,7 @@ private:
 	void initWindow();
 	void saveFile(const LPSTR& file);
 	void openFile(const LPSTR& file);
+	char* getTime();
+	bool insertIntoEditControl(char* txt);
 };
 

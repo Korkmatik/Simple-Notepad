@@ -2,7 +2,7 @@
 
 #include <stdio.h> 
 #include <string.h>
-
+#include <time.h>
 
 
 MainWindow::MainWindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow, LRESULT(*WindowProcedure)(HWND, UINT, WPARAM, LPARAM)) :
@@ -121,6 +121,15 @@ void MainWindow::exit(HWND hWnd) {
 	}
 }
 
+void MainWindow::insertDate(HWND hWnd) {
+	
+	char* timeBuffer = getTime();
+
+	if(insertIntoEditControl(timeBuffer) == false)
+		MessageBox(NULL, "Couldn't insert Date into edit control", "Error", MB_ICONERROR);
+
+}
+
 void MainWindow::initWindow() {
 	wc.lpfnWndProc = (WNDPROC)WindowProcedure;
 	wc.hInstance = hInstance;
@@ -165,6 +174,44 @@ void MainWindow::openFile(const LPSTR & file) {
 			free(data);
 		}
 	}
+}
+
+char * MainWindow::getTime() {
+	time_t rawtime;
+	struct tm newTime;
+	static char timeBuffer[26];
+	static char err[] = "Error";
+
+	time(&rawtime);
+
+	if (localtime_s(&newTime, &rawtime)) {
+		MessageBox(NULL, "Error: localtime_s", "Error", MB_OK);
+		return err;
+	}
+	if (asctime_s(timeBuffer, 26, &newTime)) {
+		MessageBox(NULL, "Error: asctime_s", "Time", MB_OK);
+		return err;
+	}
+
+	return timeBuffer;
+}
+
+bool MainWindow::insertIntoEditControl(char * txt) {
+	int textLength = GetWindowTextLength(hEditBox) + strlen(txt) + 1;
+
+	char* buffer = (char*)malloc(textLength);
+	if (buffer == NULL) return false;
+
+	GetWindowText(hEditBox, buffer, textLength);
+
+	strcat_s(buffer, textLength, txt);
+
+	SetWindowText(hEditBox, buffer);
+
+	free(buffer);
+
+	return true;
+
 }
 
 
