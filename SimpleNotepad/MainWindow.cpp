@@ -17,7 +17,7 @@ MainWindow::~MainWindow() {}
 void MainWindow::start() {
 	hMainWindow = CreateWindowW(wc.lpszClassName, L"First",
 		WS_VISIBLE | WS_OVERLAPPEDWINDOW,
-		100, 100, 1024, 600,
+		100, 100, 1050, 600,
 		NULL, NULL, NULL, NULL);
 
 	MSG msg = {};
@@ -26,6 +26,44 @@ void MainWindow::start() {
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
+}
+
+void MainWindow::addComponents(HWND hWnd, HWND& hEditB) {
+	hEditB = CreateWindowW(L"Edit", L"",
+		WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL | ES_AUTOVSCROLL | ES_MULTILINE,
+		15, 80, 1000, 450,
+		hWnd, NULL, NULL, NULL);
+
+	HMENU hFileMenuBar = CreateMenu();
+	HMENU hFileMenu = CreateMenu();
+
+	AppendMenuW(hFileMenu, MF_STRING, FILE_NEW, L"New");
+	AppendMenuW(hFileMenu, MF_STRING, FILE_OPEN, L"Open");
+	AppendMenuW(hFileMenu, MF_STRING, FILE_SAVE, L"Save");
+	AppendMenuW(hFileMenu, MF_STRING, FILE_SAVE_AS, L"Save as ..");
+
+	AppendMenuW(hFileMenuBar, MF_POPUP, (UINT_PTR)hFileMenu, L"File");
+
+	SetMenu(hWnd, hFileMenuBar);
+}
+
+void MainWindow::getSaveFilePath(HWND hWnd) {
+	OPENFILENAME ofn;
+
+	char fileName[1000];
+	
+	ZeroMemory(&ofn, sizeof(OPENFILENAME));
+
+	ofn.lStructSize = sizeof(OPENFILENAME);
+	ofn.hwndOwner = hWnd;
+	ofn.lpstrFile = fileName;
+	ofn.lpstrFile[0] = '\0';
+	ofn.nMaxFile = 1000;
+	ofn.lpstrFilter = "All files\0*.*\0Source Files\0*.cpp\0Text Files\0*.txt\0";
+	ofn.nFilterIndex = 1;
+
+	if (GetSaveFileName(&ofn) != 0);
+		
 }
 
 void MainWindow::initWindow() {
