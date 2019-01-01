@@ -52,7 +52,7 @@ void MainWindow::addComponents(HWND hWnd, HWND& hEditB) {
 void MainWindow::getSaveFilePath(HWND hWnd) {
 	OPENFILENAME ofn;
 
-	char fileName[1000];
+	char fileName[10000];
 	
 	ZeroMemory(&ofn, sizeof(OPENFILENAME));
 
@@ -60,12 +60,31 @@ void MainWindow::getSaveFilePath(HWND hWnd) {
 	ofn.hwndOwner = hWnd;
 	ofn.lpstrFile = fileName;
 	ofn.lpstrFile[0] = '\0';
-	ofn.nMaxFile = 1000;
+	ofn.nMaxFile = 10000;
 	ofn.lpstrFilter = "All files\0*.*\0Source Files\0*.cpp\0Text Files\0*.txt\0";
 	ofn.nFilterIndex = 1;
 
 	if (GetSaveFileName(&ofn) != NULL)
 		saveFile(ofn.lpstrFile);
+}
+
+void MainWindow::getOpenFilePath(HWND hWnd) {
+	OPENFILENAME ofn;
+	char fileName[10000];
+
+	ZeroMemory(&ofn, sizeof(OPENFILENAME));
+
+	ofn.lStructSize = sizeof(OPENFILENAME);
+	ofn.hwndOwner = hWnd;
+	ofn.lpstrFile = fileName;
+	ofn.lpstrFile[0] = '\0';
+	ofn.nMaxFile = 10000;
+	ofn.lpstrFilter = "All files\0*.*\0Source Files\0*.cpp\0Text Files\0*.txt\0";
+	ofn.nFilterIndex = 1;
+
+	if (GetOpenFileName(&ofn) != NULL) {
+		openFile(ofn.lpstrFile);
+	}
 }
 
 void MainWindow::initWindow() {
@@ -89,6 +108,28 @@ void MainWindow::saveFile(const LPSTR & file) {
 		fwrite(text, textLength, 1, f);
 		fclose(f);
 		free(text);
+	}
+}
+
+void MainWindow::openFile(const LPSTR & file) {
+	FILE* f;
+	char* data;
+	unsigned int dSize;
+
+	fopen_s(&f, file, "rb");
+
+	if (f != NULL) {
+		fseek(f, 0, SEEK_END);
+		dSize = ftell(f) + 1;
+		rewind(f);
+		if ((data = (char*)malloc(dSize * sizeof(char))) != NULL) {
+			fread(data, dSize - 1, 1, f);
+			data[dSize - 1] = '\0';
+
+			SetWindowText(hEditBox, data);
+			fclose(f);
+			free(data);
+		}
 	}
 }
 

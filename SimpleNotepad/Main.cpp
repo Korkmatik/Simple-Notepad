@@ -8,8 +8,13 @@ LRESULT WindowProcedure(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		switch (wParam) {
 		case MainWindow::FILE_NEW:
 			MessageBeep(MB_ICONINFORMATION);
+			break;
 		case MainWindow::FILE_SAVE:
 			window->getSaveFilePath(hwnd);
+			break;
+		case MainWindow::FILE_OPEN:
+			window->getOpenFilePath(hwnd);
+			break;
 		default:
 			break;
 		}
