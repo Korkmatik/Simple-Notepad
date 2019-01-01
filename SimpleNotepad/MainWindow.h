@@ -13,6 +13,7 @@ public:
 
 	void start();
 	void addComponents(HWND hWnd, HWND& hEditB);
+	void newFile(HWND hWnd);
 	void save(HWND hWnd);
 	void getSaveFilePath(HWND hWnd);
 	void getOpenFilePath(HWND hWnd);
@@ -34,5 +35,6 @@ private:
 	void openFile(const LPSTR& file);
 	char* getTime();
 	bool insertIntoEditControl(char* txt);
+	void clearEditControl();
 };
 
