@@ -11,7 +11,7 @@ public:
 	~MainWindow();
 
 	void start();
-	static void addComponents(HWND hWnd, HWND& hEditB);
+	void addComponents(HWND hWnd, HWND& hEditB);
 	void getSaveFilePath(HWND hWnd);
 
 private:

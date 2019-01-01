@@ -13,8 +13,9 @@ LRESULT WindowProcedure(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		default:
 			break;
 		}
+		break;
 	case WM_CREATE:
-		MainWindow::addComponents(hwnd, window->hEditBox);
+		window->addComponents(hwnd, window->hEditBox);
 		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);

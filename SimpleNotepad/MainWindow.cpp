@@ -1,5 +1,7 @@
 #include "MainWindow.h"
 
+#include <stdio.h> 
+
 
 
 MainWindow::MainWindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow, LRESULT(*WindowProcedure)(HWND, UINT, WPARAM, LPARAM)) :
@@ -62,8 +64,8 @@ void MainWindow::getSaveFilePath(HWND hWnd) {
 	ofn.lpstrFilter = "All files\0*.*\0Source Files\0*.cpp\0Text Files\0*.txt\0";
 	ofn.nFilterIndex = 1;
 
-	if (GetSaveFileName(&ofn) != 0);
-		
+	if (GetSaveFileName(&ofn) != NULL)
+		saveFile(ofn.lpstrFile);
 }
 
 void MainWindow::initWindow() {
@@ -72,6 +74,22 @@ void MainWindow::initWindow() {
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
 	wc.lpszClassName = L"MainWindow";
+}
+
+void MainWindow::saveFile(const LPSTR & file) {
+	FILE* f;
+	fopen_s(&f, file, "w");
+
+	if (f != NULL) {
+		int textLength = GetWindowTextLength(hEditBox);
+		char* text;
+		if ((text = (char*)malloc(textLength * sizeof(char) + 1)) != NULL) {
+			GetWindowText(hEditBox, text, textLength);
+		}
+		fwrite(text, textLength, 1, f);
+		fclose(f);
+		free(text);
+	}
 }
 
 
