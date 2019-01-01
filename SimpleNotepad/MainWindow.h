@@ -5,7 +5,8 @@ class MainWindow
 {
 public:
 	HWND hEditBox;
-	enum RESOURCE { FILE_NEW = 1, FILE_OPEN, FILE_SAVE, FILE_SAVE_AS, FILE_EXIT};
+	enum RESOURCE { FILE_NEW = 1, FILE_OPEN, FILE_SAVE, FILE_SAVE_AS, FILE_EXIT, 
+		TEMPLATE_TIME_OF_DAY, TEMPLATE_DATE, TEMPLATE_TIME};
 
 	MainWindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow, LRESULT(*WindowProcedure)(HWND, UINT, WPARAM, LPARAM));
 	~MainWindow();
